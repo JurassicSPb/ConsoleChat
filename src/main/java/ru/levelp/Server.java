@@ -43,9 +43,9 @@ public class Server {
             try {
                 reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 writer = new PrintWriter(socket.getOutputStream(), true);
-                //close();
             } catch (IOException e) {
                 e.printStackTrace();
+                close();
             }
         }
         public void run(){
@@ -54,8 +54,8 @@ public class Server {
                 name = reader.readLine();
                 //System.out.println("afterread");
                 for(ClientHandler c : clients) {
-                    c.writer.println(name + "вошел в чат");
-                    System.out.println(name + "вошел в чат");
+                    c.writer.println(name + " вошел в чат");
+                    System.out.println(name + " вошел в чат");
                 }
                 String str;
                 while (true) {
@@ -67,8 +67,8 @@ public class Server {
                     }
                 }
                 for(ClientHandler c : clients) {
-                    c.writer.println(name + "покинул чат");
-                    System.out.println(name + "покинул чат");
+                    c.writer.println(name + " покинул чат");
+                    System.out.println(name + " покинул чат");
                 }
                 close();
             } catch (IOException e) {
