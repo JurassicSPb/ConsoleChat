@@ -50,26 +50,28 @@ public class Server {
         }
         public void run(){
             try {
-                //System.out.println("readline");
                 name = reader.readLine();
-                //System.out.println("afterread");
                 for(ClientHandler c : clients) {
-                    c.writer.println(name + " вошел в чат");
-                    System.out.println(name + " вошел в чат");
-                }
+                        c.writer.println(name + " вошел в чат");
+                        System.out.println(name + " вошел в чат");
+                    }
                 String str;
                 while (true) {
                     str = reader.readLine();
                     if(str.equals("exit")) break;
                     for(ClientHandler c : clients) {
-                        System.out.println(name + ": " + str);
-                        c.writer.println(name + ": " + str);
+                        if (c.name.equals(name) ) {
+                            continue;}
+                        else {
+                            System.out.println(name + ": " + str);
+                            c.writer.println(name + ": " + str);
+                        }
                     }
                 }
                 for(ClientHandler c : clients) {
-                    c.writer.println(name + " покинул чат");
-                    System.out.println(name + " покинул чат");
-                }
+                        c.writer.println(name + " покинул чат");
+                        System.out.println(name + " покинул чат");
+                    }
                 close();
             } catch (IOException e) {
                 e.printStackTrace();
