@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.ArrayList;
 
 
@@ -51,32 +52,36 @@ public class Server {
         public void run(){
             try {
                 name = reader.readLine();
-                for(ClientHandler c : clients) {
-                        c.writer.println(name + " вошел в чат");
-                        System.out.println(name + " вошел в чат");
-                    }
+                for (ClientHandler c : clients) {
+                    c.writer.println(name + " вошел в чат");
+                    System.out.println(name + " вошел в чат");
+                }
                 String str;
                 while (true) {
                     str = reader.readLine();
-                    if(str.equals("exit")) break;
-                    for(ClientHandler c : clients) {
-                        if (c.name.equals(name) ) {
-                            continue;}
-                        else {
+                    if (str.equals("exit")) break;
+                    for (ClientHandler c : clients) {
+                        if (c.name.equals(name)) {
+                            continue;
+                        } else {
                             System.out.println(name + ": " + str);
                             c.writer.println(name + ": " + str);
                         }
                     }
                 }
-                for(ClientHandler c : clients) {
-                        c.writer.println(name + " покинул чат");
-                        System.out.println(name + " покинул чат");
-                    }
+                for (ClientHandler c : clients) {
+                    c.writer.println(name + " покинул чат");
+                    System.out.println(name + " покинул чат");
+                }
                 close();
+
+            } catch (SocketException e){
+                e.printStackTrace();
+                System.out.println("Аварийное завершение работы");
             } catch (IOException e) {
                 e.printStackTrace();
+                System.out.println("Ошибка при подключении");
             }
-
         }
         public void close() {
             try {

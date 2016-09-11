@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.Socket;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.SocketException;
 
 /**
  * Created by Мария on 10.09.2016.
@@ -54,22 +55,22 @@ public class Client {
         }
         @Override
         public void run(){
-            while (!stopped){
-                try {
-                    String str = reader.readLine();
-                    if (str==null)  {
-                        break;
-                    }
-
-                    System.out.println(str);
-                } catch (IOException e) {
-                    System.out.println("Ошибка при получении сообщения.");
+            try {
+            while (!stopped) {
+                String str = reader.readLine();
+                if (str == null) {
+                    break;
+                }
+                System.out.println(str);
+            }
+                }  catch (SocketException e){
                     e.printStackTrace();
+                    System.out.println("Аварийное завершение работы");
+                }   catch (IOException e) {
+                    e.printStackTrace();
+                    System.out.println("Ошибка при подключении");
                 }
             }
 
         }
-
-
     }
-}
