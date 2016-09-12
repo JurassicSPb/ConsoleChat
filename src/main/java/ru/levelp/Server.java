@@ -57,21 +57,32 @@ public class Server {
                     System.out.println(name + " вошел в чат");
                 }
                 String str;
+                String [] part;
                 while (true) {
                     str = reader.readLine();
-                    if (str.equals("exit")) break;
-                    for (ClientHandler c : clients) {
-                        if (c.name.equals(name)) {
+                    part = str.split("~");
+                    String part1 = part[0];
+                    if (str.equals("exit")) {break;}
+                    for (int i=0; i<clients.size(); i++){
+                        if (clients.get(i).name.equals(name)) {
                             continue;
-                        } else {
+                        }
+                        else if ((clients.get(i).name).equals(part1)){
+                            clients.get(i).writer.println("Вам пришло личное сообщение от собеседника: ");
+                            clients.get(i).writer.println(name + ": " + str);
+                            writer.flush();
+                        }
+                        else if (str.indexOf("~", name.length()-1) ==-1){
                             System.out.println(name + ": " + str);
-                            c.writer.println(name + ": " + str);
+                            clients.get(i).writer.println(name + ": " + str);
+                            writer.flush();
                         }
                     }
                 }
                 for (ClientHandler c : clients) {
                     c.writer.println(name + " покинул чат");
                     System.out.println(name + " покинул чат");
+                    writer.flush();
                 }
                 close();
 

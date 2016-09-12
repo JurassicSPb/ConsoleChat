@@ -27,10 +27,12 @@ public class Client {
             ClientMessageHandler clientMessageHandler = new ClientMessageHandler();
             clientMessageHandler.start();
 
-            System.out.println("Введите свой ник(логин) или нажмите \"exit\" для выхода из чата:");
+            System.out.println("Введите свой ник (логин) или наберите \"exit\" для выхода из чата:");
+            System.out.println ("Введите ник (логин) собеседника и символ тильда \"~\" и отправляйте личные сообщения," +
+                    "например, \"Вася~привет, как дела!\"");
             while(true) {
                 String message = consoleReader.readLine();
-                if (message == null ) {
+                if (message == null) {
                     break;
                 }
                 writer.println(message);
