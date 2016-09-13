@@ -72,7 +72,7 @@ public class Server {
                             clients.get(i).writer.println(name + ": " + str);
                             writer.flush();
                         }
-                        else if (str.indexOf("~", clients.get(i).name.length()) ==-1){
+                        else if (str.indexOf("~", clients.get(i).name.length())-1 ==-1){
                             System.out.println(name + ": " + str);
                             clients.get(i).writer.println(name + ": " + str);
                             writer.flush();
